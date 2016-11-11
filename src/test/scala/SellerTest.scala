@@ -1,3 +1,4 @@
+import actors.Auction.{AuctionIgnored, AuctionStarted, StartAuction}
 import actors.{Auction, AuctionSearch, Seller}
 import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.pattern.ask

@@ -1,11 +1,15 @@
 package actors
 
+import actors.Auction.StartAuction
 import akka.actor.{Actor, Props}
 import akka.actor.Actor.Receive
-import messages.{AuctionSold, CreateAuction, RegisterAuction, StartAuction}
+import messages._
 
-class Seller extends Actor {
+class Seller(var id: String) extends Actor {
   override def receive: Receive = {
+    case RegisterSelf => {
+      context.actorSelection("/user/" + "AuctionSearch") ! RegisterSeller(self, this.id)
+    }
     case message: CreateAuction => {
       val newAuction = context.actorOf(Props(new Auction(message.name)))
       newAuction ! StartAuction

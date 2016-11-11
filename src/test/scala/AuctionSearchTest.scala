@@ -20,16 +20,16 @@ class AuctionSearchTest extends TestKit(ActorSystem("AuctionSearchSpec")) with W
 
     "save auction in map during registration" in {
       val auctionSearch = TestActorRef(new AuctionSearch())
-      val seller = TestActorRef(new Seller())
+      val seller = TestActorRef(new Seller("TestSeller"))
       val auction = TestActorRef(new Auction("TestAuction"))
 
       auctionSearch ! RegisterAuction(auction, "HELLO")
-      assert (auctionSearch.underlyingActor.map.getOrElse("HELLO", null) == auction)
+      assert (auctionSearch.underlyingActor.auctionMap.getOrElse("HELLO", null) == auction)
     }
 
     "return previously registered auction" in {
       val auctionSearch = TestActorRef(new AuctionSearch())
-      val seller = TestActorRef(new Seller())
+      val seller = TestActorRef(new Seller("TestSeller"))
       val auction = TestActorRef(new Auction("TestAuction"))
 
       auctionSearch ! RegisterAuction(auction, "HELLO")
